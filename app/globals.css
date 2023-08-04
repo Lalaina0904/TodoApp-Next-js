@@ -3,25 +3,76 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+            to bottom,
+            transparent,
+            rgb(var(--background-end-rgb))
+        )
+        rgb(var(--background-start-rgb));
+}
+
+.main__container {
+    padding: 2rem;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+input {
+    padding: 0.5rem 1rem;
+    margin: 1rem 0.5rem;
+    color: black;
+    outline: none;
+}
+
+.add__btn {
+    background: #1b6b78;
+    padding: 0.5rem 1rem;
+}
+
+.input__add {
+    padding: 0.5rem 1rem;
+    color: black;
+}
+
+.btn__delete,
+.btn__update {
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn__delete {
+    color: red;
+}
+
+.btn__save,
+.btn__cancel {
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }
