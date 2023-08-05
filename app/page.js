@@ -1,21 +1,12 @@
 "use client";
-import "./globals.css";
 
-import { useState, useEffect } from "react";
-import localforage from "localforage";
+import { useState } from "react";
 
 export default function Home() {
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState("");
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editingTaskText, setEditingTaskText] = useState("");
-
-    const fetchTasks = async () => {
-        const tasks = await localforage.getItem("tasks");
-        if (tasks) {
-            setTasks(tasks);
-        }
-    };
 
     const addTask = () => {
         if (newTask.trim() !== "") {
@@ -24,7 +15,6 @@ export default function Home() {
                 { id: Date.now(), text: newTask, completed: false },
             ];
             setTasks(updatedTasks);
-            localforage.setItem("tasks", updatedTasks);
             setNewTask("");
         }
     };
@@ -34,7 +24,11 @@ export default function Home() {
             task.id === taskId ? { ...task, completed: !task.completed } : task
         );
         setTasks(updatedTasks);
-        localforage.setItem("tasks", updatedTasks);
+    };
+
+    const deleteTask = (taskId) => {
+        const updatedTasks = tasks.filter((task) => task.id !== taskId);
+        setTasks(updatedTasks);
     };
 
     const startEditing = (taskId, taskText) => {
@@ -52,27 +46,15 @@ export default function Home() {
             task.id === taskId ? { ...task, text: editingTaskText } : task
         );
         setTasks(updatedTasks);
-        localforage.setItem("tasks", updatedTasks);
         setEditingTaskId(null);
         setEditingTaskText("");
     };
 
-    const deleteTask = (taskId) => {
-        const updatedTasks = tasks.filter((task) => task.id !== taskId);
-        setTasks(updatedTasks);
-        localforage.setItem("tasks", updatedTasks);
-    };
-
-    useEffect(() => {
-        fetchTasks();
-    }, []);
-
     return (
-        <div className="main__container">
-            <h1>Todo App</h1>
+        <div>
+            <h1>Todo List</h1>
             <div>
                 <input
-                    className="input__add"
                     type="text"
                     placeholder="Ajouter une tâche"
                     value={newTask}
@@ -82,7 +64,6 @@ export default function Home() {
                     Ajouter
                 </button>
             </div>
-
             <ul>
                 {tasks.map((task) => (
                     <li key={task.id}>
@@ -101,7 +82,6 @@ export default function Home() {
                                 >
                                     Enregistrer
                                 </button>
-
                                 <button
                                     className="btn__cancel"
                                     onClick={cancelEditing}
@@ -127,7 +107,6 @@ export default function Home() {
                                 >
                                     {task.text}
                                 </span>
-
                                 <button
                                     className="btn__update"
                                     onClick={() =>
@@ -136,7 +115,6 @@ export default function Home() {
                                 >
                                     Modifier
                                 </button>
-
                                 <button
                                     className="btn__delete"
                                     onClick={() => deleteTask(task.id)}
